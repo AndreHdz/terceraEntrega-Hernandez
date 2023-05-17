@@ -1,4 +1,6 @@
-const fs = require("fs");
+import { readFileSync, writeFileSync } from 'fs';
+
+const __dirname = "C:/Users/AndreHdzzz/Desktop/terceraEntrega/src"
 
 
 class ProductManager{
@@ -6,7 +8,7 @@ class ProductManager{
 
     constructor(){
         this.products = [];
-        const productString = fs.readFileSync(`${__dirname}/products.json`, "utf-8");
+        const productString = readFileSync(`${__dirname}/products.json`, "utf-8");
         const products = JSON.parse(productString);
         this.products = products;
     }
@@ -35,7 +37,7 @@ class ProductManager{
         this.products.push(newProduct);
         
         const productsString = JSON.stringify(this.products);
-        fs.writeFileSync(`${__dirname}/products.json`, productsString);
+        writeFileSync(`${__dirname}/products.json`, productsString);
     }
     
     
@@ -49,13 +51,8 @@ class ProductManager{
                 return value;
             } 
         }); 
-        
-        if(product){
-            console.log(product);
-        } else {
-            console.log('Product not found')
-        }
 
+        return product;
     }
 
     deleteProduct(id){
@@ -66,7 +63,7 @@ class ProductManager{
         this.products.splice(productIndex,1);
 
         const productsString = JSON.stringify(this.products);
-        fs.writeFileSync(`${__dirname}/products.json`,productsString);
+        writeFileSync(`${__dirname}/products.json`,productsString);
 
         return console.log(`Producto con id:${id} eliminado correctamente`)
 
@@ -84,13 +81,13 @@ class ProductManager{
         }
 
         const productString = JSON.stringify(this.products);
-        fs.writeFileSync(`${__dirname}/products.json`, productString);
+        writeFileSync(`${__dirname}/products.json`, productString);
 
         return console.log(productString);
     }
 }
 
-const getProducts = new ProductManager;
+export default new ProductManager();
 
 
 
